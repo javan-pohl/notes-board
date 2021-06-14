@@ -11,12 +11,7 @@ const Routes = require("./lib/routes");
 const init = async () => {
   const server = new Hapi.Server({ port: Settings.port });
 
-  server.route({
-    method: "GET",
-    path: "/",
-    handler: (request, h) => "Hello, world!",
-  });
-
+	server.route(Routes)
   await Models.sequelize.sync();
 
 	await server.start();
