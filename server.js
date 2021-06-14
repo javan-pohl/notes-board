@@ -1,5 +1,9 @@
 "use strict";
 
+// Import the index.js file inside the models directory
+// (I believe Node imports the 'index' file in a dir by default)
+const Models = require("./lib/models/");
+
 const Hapi = require("@hapi/hapi");
 const Settings = require("./settings");
 const Routes = require("./lib/routes");
@@ -13,8 +17,10 @@ const init = async () => {
     handler: (request, h) => "Hello, world!",
   });
 
-  await server.start();
-  console.log(`Server running at ${server.info.uri}`);
+  await Models.sequelize.sync();
+
+	await server.start();
+  console.log(`Server running at: ${server.info.uri}`);
 };
 
 process.on("unhandledRejection", (err) => {
