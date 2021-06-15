@@ -3,7 +3,7 @@
 // Import the index.js file inside the models directory
 // (I believe Node imports the 'index' file in a dir by default)
 const Models = require("./lib/models/");
-
+const Path = require("path");
 const Hapi = require("@hapi/hapi");
 const Settings = require("./settings");
 const Routes = require("./lib/routes");
@@ -11,10 +11,21 @@ const Routes = require("./lib/routes");
 const init = async () => {
   const server = new Hapi.Server({ port: Settings.port });
 
-	server.route(Routes)
+  await server.register([require("@hapi/vision")]);
+
+  server.views({
+    engines: { pug: require("pug") },
+    path: Path.join(__dirname, "lib/views"),
+    compileOptions: {
+      pretty: false,
+    },
+    isCached: Settings.env === "production",
+  });
+	
+  server.route(Routes);
   await Models.sequelize.sync();
 
-	await server.start();
+  await server.start();
   console.log(`Server running at: ${server.info.uri}`);
 };
 
