@@ -11,7 +11,7 @@ const Routes = require("./lib/routes");
 const init = async () => {
   const server = new Hapi.Server({ port: Settings.port });
 
-  await server.register([require("@hapi/vision")]);
+  await server.register([require("@hapi/vision"), require("@hapi/inert")]);
 
   server.views({
     engines: { pug: require("pug") },
@@ -21,7 +21,7 @@ const init = async () => {
     },
     isCached: Settings.env === "production",
   });
-	
+
   server.route(Routes);
   await Models.sequelize.sync();
 
