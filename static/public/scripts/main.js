@@ -1,7 +1,7 @@
 // Modal
 
 const modal = document.querySelector(".modal");
-const html = document.querySelector(".html");
+const html = document.querySelector("html");
 
 const showModal = () => {
   modal.classList.add("is-active");
@@ -42,6 +42,17 @@ const updateNote = (html) => {
   div.innerHTML = html;
   article.parentNode.replaceChild(div.firstChild, article);
 };
+
+const onSuccess = html => {
+	hideModal();
+	form.reset();
+
+	if (method === 'POST') {
+		prependNote(html);
+	} else if (method === 'PUT'){
+		updateNote(html)
+	}
+}
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
