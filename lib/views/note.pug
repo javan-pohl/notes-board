@@ -3,6 +3,7 @@ extends layout
 block content
 	section.section 
 		.container 
+
 			h1.title.has-text-centered 	
 				| Notes Board
 
@@ -30,7 +31,7 @@ block content
 									input.input(name='noteDescription' type='text' placeholder='Short description' value=note.title)
 							.field
 								.control 
-									input.input(name='noteContent' placeholder='Contents' value=note.title) #{note.content}
+									input.input(name='noteContent' placeholder='Contents1' value=note.title) 
 							.field
-								.control 
+								.control
 									button.button.is-link Save
